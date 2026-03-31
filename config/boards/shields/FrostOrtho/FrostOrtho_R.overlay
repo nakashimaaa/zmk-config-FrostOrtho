@@ -21,7 +21,7 @@
 
 // AMLから離脱しないキー
 &zip_temp_layer {
-    require-prior-idle-ms = <200>;
+    require-prior-idle-ms = <500>;
     excluded-positions = <
         16 // J 左クリック
         17 // K 左クリック
