@@ -45,6 +45,16 @@
             bindings = <&kp ESCAPE>;
             key-positions = <0 10>;
         };
+
+        v_scr {
+            bindings = <&mo 5>;
+            key-positions = <12 13>;
+        };
+
+        h_scr {
+            bindings = <&mo 7>;
+            key-positions = <12 11>;
+        };
     };
 
     macros {
@@ -117,10 +127,10 @@
 &kp LEFT_CONTROL  &kp LEFT_WIN  &mt LEFT_ALT GRAVE  &lt 2 TAB  &kp SPACE  &mo 4      &kp ENTER  &mo 3  &mo 4      &kp LEFT_SHIFT  &mo 6
             >;
 
-            sensor-bindings = <&rsr_vol &rsr_trans>;
+            sensor-bindings = <&scroll_up_down>, <&rsr_trans>;
         };
 
-        layer_1 {
+        mouse {
             bindings = <
 &trans  &trans  &trans  &trans  &trans              &mkp MB1  &mkp MB3  &mkp MB2  &trans  &trans
 &trans  &trans  &trans  &trans  &trans              &trans    &trans    &trans    &trans  &trans
@@ -128,7 +138,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans    &trans    &trans    &trans  &trans
             >;
 
-            sensor-bindings = <&rsr_vol &rsr_trans>;
+            sensor-bindings = <&scroll_up_down>, <&rsr_trans>;
         };
 
         layer_2 {
@@ -139,7 +149,7 @@
 &kp F11       &kp F12       &trans        &trans        &trans   &trans      &trans        &trans           &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9
             >;
 
-            sensor-bindings = <&rsr_vol &rsr_trans>;
+            sensor-bindings = <&scroll_up_down>, <&rsr_trans>;
         };
 
         layer_3 {
@@ -153,7 +163,7 @@
             sensor-bindings = <&inc_dec_kp LC(MINUS) LC(PLUS)>, <&rsr_trans>;
         };
 
-        layer_4 {
+        arrow {
             bindings = <
 &trans          &trans          &kp UP_ARROW    &trans           &trans              &trans  &trans              &kp LS(UP_ARROW)    &trans               &trans
 &trans          &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &trans              &trans  &kp LS(LEFT_ARROW)  &kp LS(DOWN_ARROW)  &kp LS(RIGHT_ARROW)  &trans
@@ -161,10 +171,10 @@
 &trans          &trans          &trans          &trans           &trans  &trans      &trans  &trans              &trans              &trans               &trans
             >;
 
-            sensor-bindings = <&rsr_vol &rsr_trans>;
+            sensor-bindings = <&scroll_up_down>, <&rsr_trans>;
         };
 
-        layer_5 {
+        v_scroll {
             bindings = <
 &trans  &trans  &trans  &trans  &trans              &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans              &trans  &trans  &trans  &trans  &trans
@@ -172,10 +182,10 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans
             >;
 
-            sensor-bindings = <&rsr_vol &rsr_trans>;
+            sensor-bindings = <&scroll_up_down>, <&rsr_trans>;
         };
 
-        MOUSE {
+        bt {
             bindings = <
 &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                      &trans  &trans  &trans  &trans  &trans
 &trans          &trans        &trans        &trans        &trans                            &trans  &trans  &trans  &trans  &trans
@@ -186,7 +196,7 @@
             sensor-bindings = <&rsr_vol &rsr_trans>;
         };
 
-        layer_7 {
+        h_scroll {
             bindings = <
 &kp LC(Z)  &kp LC(Y)    &trans       &trans       &trans              &trans  &trans  &trans  &trans  &trans
 &trans     &trans       &trans       &trans       &trans              &trans  &trans  &trans  &trans  &trans
