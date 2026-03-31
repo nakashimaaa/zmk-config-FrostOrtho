@@ -21,11 +21,11 @@
 
 // AMLから離脱しないキー
 &zip_temp_layer {
-    require-prior-idle-ms = <500>;
+    require-prior-idle-ms = <50>;
     excluded-positions = <
-        16 // J 左クリック
-        17 // K 左クリック
-        18 // L 左クリック
+        05 // J 左クリック
+        06 // K 左クリック
+        07 // L 左クリック
         20 // Z Shift
         30 // Control
         32 // Alt
