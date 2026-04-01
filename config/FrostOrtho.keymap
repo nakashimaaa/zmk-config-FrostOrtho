@@ -160,7 +160,7 @@
 &trans            &trans            &trans            &trans            &kp LC(Z)         &kp LS(LC(Z))      &trans  &trans            &trans             &trans         &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp LC(MINUS) LC(PLUS)>, <&rsr_trans>;
+            sensor-bindings = <&inc_dec_kp LC(MINUS) LC(EQUAL)>, <&rsr_trans>;
         };
 
         arrow {
@@ -193,7 +193,7 @@
 &bt BT_CLR_ALL  &bt BT_CLR    &trans        &trans        &bootloader   &studio_unlock      &trans  &trans  &trans  &trans  &trans
             >;
 
-            sensor-bindings = <&rsr_vol &rsr_trans>;
+            sensor-bindings = <&scroll_up_down>, <&rsr_trans>;
         };
 
         h_scroll {
@@ -204,7 +204,7 @@
 &trans     &trans       &trans       &trans       &trans  &trans      &trans  &trans  &trans  &trans  &trans
             >;
 
-            sensor-bindings = <&rsr_vol &rsr_trans>;
+            sensor-bindings = <&scroll_up_down>, <&rsr_trans>;
         };
     };
 };
