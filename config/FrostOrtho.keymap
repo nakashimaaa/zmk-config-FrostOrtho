@@ -160,7 +160,9 @@
 &trans            &trans            &trans            &trans            &kp LC(Z)         &kp LS(LC(Z))      &trans  &trans            &trans             &trans         &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp LC(MINUS) LC(EQUAL)>, <&rsr_trans>;
+            sensor-bindings =
+                <&inc_dec_kp LC(KP_EQUAL) LC(KP_MINUS)>,
+                <&rsr_trans>;
         };
 
         arrow {
