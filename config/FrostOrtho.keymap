@@ -32,7 +32,7 @@
         };
 
         EN {
-            bindings = <&kp LANG2>;
+            bindings = <&mt LEFT_ALT LANG2>;
             key-positions = <5 6>;
         };
 
