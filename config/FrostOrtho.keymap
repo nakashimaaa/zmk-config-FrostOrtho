@@ -32,7 +32,7 @@
         };
 
         EN {
-            bindings = <&mt LEFT_ALT LANG2>;
+            bindings = <&kp LANG2>;
             key-positions = <5 6>;
         };
 
@@ -54,6 +54,11 @@
         h_scr {
             bindings = <&mo 7>;
             key-positions = <12 11>;
+        };
+
+        Zoom {
+            bindings = <&kp LEFT_ALT>;
+            key-positions = <25 36>;
         };
     };
 
