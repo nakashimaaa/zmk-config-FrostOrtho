@@ -161,8 +161,8 @@
             bindings = <
 &kp LS(NUMBER_1)  &kp LS(NUMBER_2)  &kp LS(NUMBER_3)  &kp LS(NUMBER_4)  &kp LS(NUMBER_5)                     &trans  &kp LS(N9)        &kp LS(N0)         &trans         &kp DEL
 &kp LS(NUMBER_6)  &kp LS(NUMBER_7)  &kp LS(NUMBER_8)  &kp PAGE_UP       &kp HOME                             &trans  &kp MINUS         &kp EQUAL          &kp SEMICOLON  &kp SQT
-&trans            &trans            &trans            &kp PAGE_DOWN     &kp END                              &trans  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp GRAVE      &kp BACKSLASH
-&trans            &trans            &trans            &trans            &kp LC(Z)         &kp LS(LC(Z))      &trans  &trans            &trans             &trans         &trans
+&kp LC(PLUS)      &trans            &trans            &kp PAGE_DOWN     &kp END                              &trans  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp GRAVE      &kp BACKSLASH
+&kp LC(MINUS)     &trans            &trans            &trans            &kp LC(Z)         &kp LS(LC(Z))      &trans  &trans            &trans             &trans         &trans
             >;
 
             sensor-bindings =
