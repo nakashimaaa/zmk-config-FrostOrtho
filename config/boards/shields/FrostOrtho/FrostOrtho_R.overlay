@@ -23,9 +23,9 @@
 &zip_temp_layer {
     require-prior-idle-ms = <50>;
     excluded-positions = <
-        05 // J 左クリック
-        06 // K 左クリック
-        07 // L 左クリック
+        05 // Y 左クリック
+        06 // U 中クリック
+        07 // O 右クリック
         20 // Z Shift
         30 // Control
         32 // Alt
@@ -60,7 +60,7 @@
         // input-processors = <&mouse_runtime_input_processor>;
         input-processors = <
             &mouse_runtime_input_processor
-            &zip_temp_layer 1 100000 // AMLレイヤー、タイムアウト時間
+            &zip_temp_layer 1 50000 // AMLレイヤー、タイムアウト時間
             &zip_xy_scaler 2 3 // カーソル移動量2/3倍
             &zip_xy_transform INPUT_TRANSFORM_Y_INVERT // カーソルの移動方向調整
         >;
