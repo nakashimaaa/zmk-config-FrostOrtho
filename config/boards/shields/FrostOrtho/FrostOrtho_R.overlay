@@ -56,12 +56,12 @@
         status = "okay";
         compatible = "zmk,input-listener";
         device = <&trackball>;
-
         // input-processors = <&mouse_runtime_input_processor>;
         input-processors = <
             &mouse_runtime_input_processor
-            &zip_temp_layer 1 50000 // AMLレイヤー、タイムアウト時間
+            &zip_temp_layer 6 100000 // AMLレイヤー、タイムアウト時間
             &zip_xy_scaler 2 3 // カーソル移動量2/3倍
+            &zip_xy_transform INPUT_TRANSFORM_X_INVERT // カーソルの移動方向調整
             &zip_xy_transform INPUT_TRANSFORM_Y_INVERT // カーソルの移動方向調整
         >;
     };
@@ -118,12 +118,11 @@
 
     trackball: trackball@0 {
         status = "okay";
-        compatible = "pixart,pmw3610";
+        compatible = "pixart,paw3222";
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        // automouse-layer = <1>;
-        // scroll-layers = <5>;
+        res-cpi = <1500>;
     };
 };
 
