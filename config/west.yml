@@ -3,11 +3,13 @@ manifest:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
     - name: caksoylar
-      url-base: https://github.com/inorichi
+      url-base: https://github.com/caksoylar
     - name: sekigon-gonnoc  # PAW3222
-      url-base: https://github.com/inorichi
+      url-base: https://github.com/sekigon-gonnoc
     - name: cormoran
       url-base: https://github.com/cormoran
+    - name: imo00o
+      url-base: https://github.com/imo00o
   projects:
     #　- name: zmk
     #   remote: zmkfirmware
