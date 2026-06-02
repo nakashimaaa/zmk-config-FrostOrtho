@@ -23,7 +23,7 @@
     combos {
         compatible = "zmk,combos";
 
-        ClickNext {
+        v_scr2 {
             bindings = <&mo 5>;
             key-positions = <7 6>;
         };
