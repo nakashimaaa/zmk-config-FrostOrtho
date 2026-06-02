@@ -1,10 +1,10 @@
 #include <input/processors.dtsi>
 #include <behaviors/runtime-sensor-rotate.dtsi>
+#include <dt-bindings/zmk/mouse.h>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
-#include <dt-bindings/zmk/mouse.h>
 
 #define ZMK_MOUSE_DEFAULT_SCRL_VAL 100
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 100
@@ -23,13 +23,8 @@
     combos {
         compatible = "zmk,combos";
 
-        ClickPrev {
-            bindings = <&mkp MB4>;
-            key-positions = <16 17>;
-        };
-
         ClickNext {
-            bindings = <&mkp MB5>;
+            bindings = <&mo 5>;
             key-positions = <7 6>;
         };
 
@@ -102,7 +97,9 @@
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+
             // 追加: スクロールのタップ時間を設定 (20ms)
+
             tap-ms = <20>;
         };
 
