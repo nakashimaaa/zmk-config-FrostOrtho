@@ -57,6 +57,11 @@
             bindings = <&kp LEFT_ALT>;
             key-positions = <25 36>;
         };
+
+        WindowsTab {
+            bindings = <&kp LG(TAB)>;
+            key-positions = <3 4>;
+        };
     };
 
     macros {
