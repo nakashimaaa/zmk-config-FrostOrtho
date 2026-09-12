@@ -61,8 +61,7 @@ jobs:
             -S studio-rpc-usb-uart \
             -- \
             -DSHIELD=FrostOrtho_R \
-            -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" \
-            -DZMK_EXTRA_MODULES="${GITHUB_WORKSPACE}"
+            -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
 
       - name: Build FrostOrtho_L
         shell: bash
@@ -75,8 +74,7 @@ jobs:
             -p always \
             -- \
             -DSHIELD=FrostOrtho_L \
-            -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" \
-            -DZMK_EXTRA_MODULES="${GITHUB_WORKSPACE}"
+            -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
 
       - name: Build settings_reset
         shell: bash
@@ -89,8 +87,7 @@ jobs:
             -p always \
             -- \
             -DSHIELD=settings_reset \
-            -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" \
-            -DZMK_EXTRA_MODULES="${GITHUB_WORKSPACE}"
+            -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
 
       - name: Copy artifacts
         shell: bash
