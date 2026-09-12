@@ -24,57 +24,64 @@
     runtime_combo_defaults {
         compatible = "cormoran,runtime-combo-defaults";
 
-        v_scr2 {
+        Delete {
             slot = <0>;
+            bindings = <&kp DELETE>;
+            key-positions = <8 9>;
+            display-name = "Delete";
+        };
+
+        v_scr2 {
+            slot = <1>;
             bindings = <&mo 5>;
             key-positions = <7 6>;
             display-name = "v_scr2";
         };
 
         EN {
-            slot = <1>;
+            slot = <2>;
             bindings = <&kp LANG2>;
             key-positions = <5 6>;
             display-name = "EN";
         };
 
         JP {
-            slot = <2>;
+            slot = <3>;
             bindings = <&kp LANG1>;
             key-positions = <15 16>;
             display-name = "JP";
         };
 
         Esc {
-            slot = <3>;
+            slot = <4>;
             bindings = <&kp ESCAPE>;
             key-positions = <0 10>;
             display-name = "Esc";
         };
 
         v_scr {
-            slot = <4>;
+            slot = <5>;
             bindings = <&mo 5>;
             key-positions = <12 13>;
             display-name = "v_scr";
         };
 
         h_scr {
-            slot = <5>;
+            slot = <6>;
             bindings = <&mo 7>;
             key-positions = <12 11>;
             display-name = "h_scr";
         };
 
         Zoom {
-            slot = <6>;
+            slot = <7>;
             bindings = <&kp LEFT_ALT>;
             key-positions = <25 36>;
             display-name = "Zoom";
         };
 
         WindowsTab {
-            slot = <7>;
+            slot = <8>;
             bindings = <&kp LG(TAB)>;
             key-positions = <3 4>;
             display-name = "WindowsTab";
@@ -100,6 +107,19 @@
             #binding-cells = <1>;
             bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
             label = "TO_LAYER_0";
+        };
+
+        // Temporary compatibility for keymaps saved before runtime macro migration.
+        screenshot: screenshot {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&to 7>,
+                <&macro_press>,
+                <&kp LEFT_WIN &kp LEFT_SHIFT &kp S>,
+                <&macro_release>,
+                <&kp LEFT_WIN &kp LEFT_SHIFT &kp S>;
+            label = "SCREENSHOT";
         };
 
     };
@@ -152,7 +172,7 @@
 &kp Q             &kp W         &kp E               &kp R      &kp T                 &kp Y  &kp U      &kp I      &kp O           &kp P
 &kp A             &kp S         &kp D               &kp F      &kp G                 &kp H  &kp J      &kp K      &kp L           &kp BACKSPACE
 &mt LEFT_SHIFT Z  &kp X         &kp C               &kp V      &kp B                 &kp N  &kp M      &kp COMMA  &kp PERIOD      &kp SLASH
-&kp LEFT_CONTROL  &kp LEFT_WIN  &mt LEFT_ALT GRAVE  &kp SPACE  &lt 2 TAB  &mo 4      &mo 3  &kp ENTER  &mo 4      &kp LEFT_SHIFT  &mo 6
+&kp LEFT_CONTROL  &kp LEFT_WIN  &mt LEFT_ALT GRAVE  &kp SPACE  &lt 2 TAB  &lt 4 ESCAPE      &mo 3  &kp ENTER  &mo 4      &kp LEFT_SHIFT  &mo 6
             >;
 
             sensor-bindings = <&scroll_up_down>;
