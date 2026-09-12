@@ -9,14 +9,27 @@ The files here are backups and are not compiled directly into the firmware.
 2. Save the changes to the keyboard.
 3. Export both `KeyboardHubKeymap v1` and `ZMK .keymap` from Keyboard Abyss.
 4. Store both files in a dated directory under `dya/exports/`.
-5. Review the export and copy supported values into the firmware defaults.
-6. Build with GitHub Actions and flash only when the firmware defaults need updating.
+5. Run `node tools/check-dya-export.mjs <KeyboardHub JSON path>`.
+6. Review the export and copy supported values into the firmware defaults.
+7. Build with GitHub Actions and flash only when the firmware defaults need updating.
 
 ## Important
 
+- Treat the KeyboardHub JSON as the canonical DYA Studio backup. The generated
+  `.keymap` is a readable layer snapshot only.
 - Do not replace `config/FrostOrtho.keymap` with the generated `.keymap` file.
   The generated file does not contain the board includes, sensor bindings, or
   FrostOrtho-specific behavior definitions required by the firmware.
+- The KeyboardHub export contains runtime combos and macros, but the current
+  export does not contain the runtime trackball or AML settings. Keep those
+  defaults in `config/boards/shields/FrostOrtho/FrostOrtho_R.overlay` and review
+  them separately after changing pointing-device settings in DYA Studio.
+- A `raw` binding containing `local-id:` is firmware-specific. Do not copy it
+  into source. Convert it back to its known ZMK binding during review. For the
+  current WindowsTab combo, the source form is `&kp LG(TAB)`.
+- The Keyboard Abyss `.keymap` currently writes runtime macro keys as
+  `&runtime_macro <slot>`. This repository uses the module's documented source
+  binding, `&rmacro <slot>`.
 - DYA Studio settings saved on the keyboard override firmware defaults.
 - A settings reset removes Bluetooth pairings and saved DYA Studio settings.
   Export a backup before using the reset firmware.
@@ -25,3 +38,7 @@ The files here are backups and are not compiled directly into the firmware.
 
 The `2026-09-12-pre-runtime-migration` snapshot was exported before the runtime
 combo and macro defaults were flashed. It is retained as a recovery reference.
+
+The `2026-09-12-runtime-v2` snapshot is the first confirmed export after the
+runtime combo and macro migration. It contains eight layers, nine combos, and
+the `Screenshot` macro.

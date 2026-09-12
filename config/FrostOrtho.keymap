@@ -109,19 +109,6 @@
             label = "TO_LAYER_0";
         };
 
-        // Temporary compatibility for keymaps saved before runtime macro migration.
-        screenshot: screenshot {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&to 7>,
-                <&macro_press>,
-                <&kp LEFT_WIN &kp LEFT_SHIFT &kp S>,
-                <&macro_release>,
-                <&kp LEFT_WIN &kp LEFT_SHIFT &kp S>;
-            label = "SCREENSHOT";
-        };
-
     };
 
     behaviors {
