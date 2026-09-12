@@ -1,8 +1,11 @@
-file_format: "1.0.0"
+file_format: "1"
 id: FrostOrtho
 name: FrostOrtho
 type: shield
 url: https://github.com/imo00o/zmk-config-FrostOrtho
-requires: [seeeduino_xiao_ble]
+requires: [seeed_xiao]
 features:
   - keys
+siblings:
+  - FrostOrtho_L
+  - FrostOrtho_R

@@ -18,12 +18,16 @@
 #
 
 include:
-  - board: seeeduino_xiao_ble
-    # shield: FrostOrtho_R rgbled_adapter # zmk-rgbled-widgetを使用する場合はこっちを使う
+  - artifact: FrostOrtho_R
+    board: xiao_ble//zmk
     shield: FrostOrtho_R
-    snippet: studio-rpc-usb-uart
-  - board: seeeduino_xiao_ble
-    # shield: FrostOrtho_L rgbled_adapter # zmk-rgbled-widgetを使用する場合はこっちを使う
+    snippets:
+      - studio-rpc-usb-uart
+
+  - artifact: FrostOrtho_L
+    board: xiao_ble//zmk
     shield: FrostOrtho_L
-  - board: seeeduino_xiao_ble
+
+  - artifact: settings_reset
+    board: xiao_ble//zmk
     shield: settings_reset
