@@ -95,11 +95,19 @@ jobs:
           set -eux
           mkdir -p artifacts
           cp build/FrostOrtho_R/zephyr/zmk.uf2 artifacts/FrostOrtho_R.uf2
+          cp build/FrostOrtho_R/zephyr/zmk.elf artifacts/FrostOrtho_R.elf
+          cp build/FrostOrtho_R/zephyr/zmk.map artifacts/FrostOrtho_R.map
           cp build/FrostOrtho_L/zephyr/zmk.uf2 artifacts/FrostOrtho_L.uf2
+          cp build/FrostOrtho_L/zephyr/zmk.elf artifacts/FrostOrtho_L.elf
+          cp build/FrostOrtho_L/zephyr/zmk.map artifacts/FrostOrtho_L.map
           cp build/settings_reset/zephyr/zmk.uf2 artifacts/settings_reset.uf2
+          printf 'commit=%s\nworkflow_run=%s\n' \
+            "${GITHUB_SHA}" "${GITHUB_RUN_ID}" > artifacts/build-info.txt
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
           name: firmware
           path: artifacts
+          if-no-files-found: error
+          retention-days: 90
