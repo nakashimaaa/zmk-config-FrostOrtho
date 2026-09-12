@@ -47,6 +47,11 @@ manifest:
     - name: zmk-module-runtime-input-processor
     - name: zmk-behavior-runtime-sensor-rotate
       revision: feat/custom-settings-storage
+    - name: zmk-feature-input-stream
+    - name: zmk-feature-module-physical-layout
     - name: zmk-feature-custom-settings
+    - name: zmk-feature-device-info
+    - name: zmk-feature-kscan-diagnostics
+    - name: zmk-feature-watchdog
   self:
     path: config
