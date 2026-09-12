@@ -50,6 +50,9 @@ manifest:
     - name: zmk-feature-input-stream
     - name: zmk-feature-module-physical-layout
     - name: zmk-feature-custom-settings
+    - name: zmk-feature-fast-keymap
+    - name: zmk-feature-runtime-combo
+    - name: zmk-feature-runtime-macro
     - name: zmk-feature-device-info
     - name: zmk-feature-kscan-diagnostics
     - name: zmk-feature-watchdog
