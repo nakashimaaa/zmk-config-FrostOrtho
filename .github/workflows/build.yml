@@ -41,25 +41,65 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache_name }}-
 
       - name: Init
+        shell: bash
         run: |
-          git config --global --add safe.directory ${{ github.workspace }}
+          set -eux
+          git config --global --add safe.directory "${GITHUB_WORKSPACE}"
           west init -l config
           west update --narrow
           west zephyr-export
 
-      - name: Build
-        run: west zmk-build -d ./build -q
+      - name: Build FrostOrtho_R
+        shell: bash
+        run: |
+          set -eux
+          west build \
+            -s zmk/app \
+            -d build/FrostOrtho_R \
+            -b xiao_ble//zmk \
+            -p always \
+            -S studio-rpc-usb-uart \
+            -- \
+            -DSHIELD=FrostOrtho_R \
+            -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" \
+            -DZMK_EXTRA_MODULES="${GITHUB_WORKSPACE}"
+
+      - name: Build FrostOrtho_L
+        shell: bash
+        run: |
+          set -eux
+          west build \
+            -s zmk/app \
+            -d build/FrostOrtho_L \
+            -b xiao_ble//zmk \
+            -p always \
+            -- \
+            -DSHIELD=FrostOrtho_L \
+            -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" \
+            -DZMK_EXTRA_MODULES="${GITHUB_WORKSPACE}"
+
+      - name: Build settings_reset
+        shell: bash
+        run: |
+          set -eux
+          west build \
+            -s zmk/app \
+            -d build/settings_reset \
+            -b xiao_ble//zmk \
+            -p always \
+            -- \
+            -DSHIELD=settings_reset \
+            -DZMK_CONFIG="${GITHUB_WORKSPACE}/config" \
+            -DZMK_EXTRA_MODULES="${GITHUB_WORKSPACE}"
 
       - name: Copy artifacts
-        shell: sh -x {0}
+        shell: bash
         run: |
+          set -eux
           mkdir -p artifacts
-          find ./build -type f -path '*/zephyr/zmk.uf2' \
-          | while read -r f; do
-              echo "Found: $f"
-              name=$(basename "$(dirname "$(dirname "$f")")")
-              mv "$f" "artifacts/${name}.uf2"
-            done
+          cp build/FrostOrtho_R/zephyr/zmk.uf2 artifacts/FrostOrtho_R.uf2
+          cp build/FrostOrtho_L/zephyr/zmk.uf2 artifacts/FrostOrtho_L.uf2
+          cp build/settings_reset/zephyr/zmk.uf2 artifacts/settings_reset.uf2
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v4

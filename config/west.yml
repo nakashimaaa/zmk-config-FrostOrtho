@@ -11,8 +11,6 @@ manifest:
     - name: sekigon-gonnoc
       url-base: https://github.com/sekigon-gonnoc
   projects:
-    - name: zmk-west-commands
-      import: true
     - name: zmk
       import:
         file: app/west.yml
