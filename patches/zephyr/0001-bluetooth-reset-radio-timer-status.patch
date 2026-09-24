@@ -1,0 +1,29 @@
+From 355648a69f5137c68d86fe577ddb256e7da74d12 Mon Sep 17 00:00:00 2001
+Subject: [PATCH 1/2] Bluetooth: Controller: Fix missing radio tmr status reset
+
+Backport of:
+https://github.com/cormoran/zephyr/commit/355648a69f5137c68d86fe577ddb256e7da74d12
+
+Reset the radio timer/PPI state when disabling the radio. Without this reset,
+a race can leave the controller state out of sync and eventually overflow the
+prepare pipeline on nRF52840 split keyboards.
+---
+ .../bluetooth/controller/ll_sw/nordic/hal/nrf5/radio/radio.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/subsys/bluetooth/controller/ll_sw/nordic/hal/nrf5/radio/radio.c b/subsys/bluetooth/controller/ll_sw/nordic/hal/nrf5/radio/radio.c
+--- a/subsys/bluetooth/controller/ll_sw/nordic/hal/nrf5/radio/radio.c
++++ b/subsys/bluetooth/controller/ll_sw/nordic/hal/nrf5/radio/radio.c
+@@ -573,6 +573,9 @@ void radio_disable(void)
+ 	hal_radio_sw_switch_cleanup();
+ #endif /* !CONFIG_BT_CTLR_TIFS_HW */
+ 
++	/* Reset/disable PPI/DPPI */
++	radio_tmr_status_reset();
++
+ 	NRF_RADIO->SHORTS = 0;
+ 	nrf_radio_task_trigger(NRF_RADIO, NRF_RADIO_TASK_DISABLE);
+ }
+-- 
+2.51.0
+

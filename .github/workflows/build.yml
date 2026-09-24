@@ -5,12 +5,14 @@ on:
     paths:
       - 'config/**'
       - 'build.yaml'
+      - 'patches/**'
       - 'zephyr/**'
       - '.github/workflows/build.yml'
   pull_request:
     paths:
       - 'config/**'
       - 'build.yaml'
+      - 'patches/**'
       - 'zephyr/**'
       - '.github/workflows/build.yml'
   workflow_dispatch:
@@ -48,6 +50,28 @@ jobs:
           west init -l config
           west update --narrow
           west zephyr-export
+
+      - name: Apply Zephyr Bluetooth fixes
+        shell: bash
+        run: |
+          set -eux
+          patches=(
+            "${GITHUB_WORKSPACE}/patches/zephyr/0001-bluetooth-reset-radio-timer-status.patch"
+            "${GITHUB_WORKSPACE}/patches/zephyr/0002-bluetooth-fix-prepare-pipeline-overflow.patch"
+          )
+
+          for patch in "${patches[@]}"; do
+            if git -C zephyr apply --check "${patch}"; then
+              git -C zephyr apply "${patch}"
+            elif git -C zephyr apply --reverse --check "${patch}"; then
+              echo "Patch already applied: ${patch}"
+            else
+              echo "Patch cannot be applied cleanly: ${patch}" >&2
+              exit 1
+            fi
+          done
+
+          git -C zephyr diff --check
 
       - name: Build FrostOrtho_R
         shell: bash
@@ -97,10 +121,14 @@ jobs:
           cp build/FrostOrtho_R/zephyr/zmk.uf2 artifacts/FrostOrtho_R.uf2
           cp build/FrostOrtho_R/zephyr/zmk.elf artifacts/FrostOrtho_R.elf
           cp build/FrostOrtho_R/zephyr/zmk.map artifacts/FrostOrtho_R.map
+          cp build/FrostOrtho_R/zephyr/.config artifacts/FrostOrtho_R.config
           cp build/FrostOrtho_L/zephyr/zmk.uf2 artifacts/FrostOrtho_L.uf2
           cp build/FrostOrtho_L/zephyr/zmk.elf artifacts/FrostOrtho_L.elf
           cp build/FrostOrtho_L/zephyr/zmk.map artifacts/FrostOrtho_L.map
+          cp build/FrostOrtho_L/zephyr/.config artifacts/FrostOrtho_L.config
           cp build/settings_reset/zephyr/zmk.uf2 artifacts/settings_reset.uf2
+          west manifest --freeze > artifacts/west-manifest.yml
+          sha256sum patches/zephyr/*.patch > artifacts/zephyr-patches.sha256
           printf 'commit=%s\nworkflow_run=%s\n' \
             "${GITHUB_SHA}" "${GITHUB_RUN_ID}" > artifacts/build-info.txt
 
@@ -111,3 +139,28 @@ jobs:
           path: artifacts
           if-no-files-found: error
           retention-days: 90
+
+      - name: Restore cached Zephyr checkout
+        if: always()
+        shell: bash
+        run: |
+          set -eux
+          if [ ! -d zephyr/.git ]; then
+            exit 0
+          fi
+
+          patches=(
+            "${GITHUB_WORKSPACE}/patches/zephyr/0002-bluetooth-fix-prepare-pipeline-overflow.patch"
+            "${GITHUB_WORKSPACE}/patches/zephyr/0001-bluetooth-reset-radio-timer-status.patch"
+          )
+
+          for patch in "${patches[@]}"; do
+            if git -C zephyr apply --reverse --check "${patch}"; then
+              git -C zephyr apply --reverse "${patch}"
+            elif git -C zephyr apply --check "${patch}"; then
+              echo "Patch already absent: ${patch}"
+            else
+              echo "Zephyr checkout is in an unexpected state: ${patch}" >&2
+              exit 1
+            fi
+          done

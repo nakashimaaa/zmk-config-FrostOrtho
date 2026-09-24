@@ -1,0 +1,37 @@
+From 10ba6d0cb38bc3d258775d27982f707599320085 Mon Sep 17 00:00:00 2001
+Subject: [PATCH 2/2] Bluetooth: Controller: Fix prepare pipeline overflow
+
+Backport of:
+https://github.com/cormoran/zephyr/commit/10ba6d0cb38bc3d258775d27982f707599320085
+
+Cancel connection events which have not exchanged a packet instead of asking
+the controller to keep the same event in the prepare pipeline. This fixes the
+overflow observed on ZMK split central devices.
+---
+ subsys/bluetooth/controller/ll_sw/nordic/lll/lll_conn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/subsys/bluetooth/controller/ll_sw/nordic/lll/lll_conn.c b/subsys/bluetooth/controller/ll_sw/nordic/lll/lll_conn.c
+--- a/subsys/bluetooth/controller/ll_sw/nordic/lll/lll_conn.c
++++ b/subsys/bluetooth/controller/ll_sw/nordic/lll/lll_conn.c
+@@ -174,7 +174,7 @@ int lll_conn_central_is_abort_cb(void *next, void *curr,
+ 	 * exchanged.
+ 	 */
+ 	if ((next == curr) && (trx_cnt < 1U)) {
+-		return -EBUSY;
++		return -ECANCELED;
+ 	}
+ 
+ 	return -ECANCELED;
+@@ -196,7 +196,7 @@ int lll_conn_peripheral_is_abort_cb(void *next, void *curr,
+ 	 * been exchanged.
+ 	 */
+ 	if ((next == curr) && (tx_cnt < 1U)) {
+-		return -EBUSY;
++		return -ECANCELED;
+ 	}
+ 
+ 	return -ECANCELED;
+-- 
+2.51.0
+
