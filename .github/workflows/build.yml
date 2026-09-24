@@ -127,7 +127,7 @@ jobs:
           cp build/FrostOrtho_L/zephyr/zmk.map artifacts/FrostOrtho_L.map
           cp build/FrostOrtho_L/zephyr/.config artifacts/FrostOrtho_L.config
           cp build/settings_reset/zephyr/zmk.uf2 artifacts/settings_reset.uf2
-          west manifest --freeze > artifacts/west-manifest.yml
+          west manifest --freeze --active-only > artifacts/west-manifest.yml
           sha256sum patches/zephyr/*.patch > artifacts/zephyr-patches.sha256
           printf 'commit=%s\nworkflow_run=%s\n' \
             "${GITHUB_SHA}" "${GITHUB_RUN_ID}" > artifacts/build-info.txt
