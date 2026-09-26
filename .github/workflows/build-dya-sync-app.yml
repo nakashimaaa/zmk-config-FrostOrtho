@@ -1,0 +1,58 @@
+name: FrostOrtho DYA Sync App
+
+on:
+  push:
+    paths:
+      - 'tools/dya-sync-app/**'
+      - '.github/workflows/build-dya-sync-app.yml'
+  pull_request:
+    paths:
+      - 'tools/dya-sync-app/**'
+      - '.github/workflows/build-dya-sync-app.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    name: Test and build Windows app
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: tools/dya-sync-app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: tools/dya-sync-app/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check and test
+        run: |
+          pnpm run check
+          pnpm test
+
+      - name: Build portable app
+        run: pnpm run dist
+
+      - name: Upload Windows app
+        uses: actions/upload-artifact@v4
+        with:
+          name: FrostOrtho-DYA-Sync-Windows
+          path: tools/dya-sync-app/dist/*.exe
+          if-no-files-found: error
+          retention-days: 90

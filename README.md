@@ -23,6 +23,8 @@ FrostOrthoをご購入いただきありがとうございます！
 - キーマップ変更方法  
 [キーマップ変更方法](./doc/キーマップ変更方法.md)
 
+- DYA Studioエクスポートの同期：[FrostOrtho DYA Sync](./tools/dya-sync-app/README.md)
+
 ## 各種リンク
 - ケースデータ：[FrostOrtho-3dprint-data](https://github.com/imo00o/FrostOrtho-3dprint-data)  
 個人利用の範囲でしたらご自由に使用・改変いただけます。改変して頒布したいなどあればご相談ください。    

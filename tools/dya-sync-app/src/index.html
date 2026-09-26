@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'"
+    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostOrtho DYA Sync</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><i data-lucide="keyboard"></i></div>
+        <div>
+          <h1>FrostOrtho DYA Sync</h1>
+          <p id="version-label">DYA Studio export manager</p>
+        </div>
+      </div>
+      <div class="header-status" id="header-status" data-state="idle">
+        <span class="status-dot"></span>
+        <span id="header-status-text">準備待ち</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="repo-bar" aria-labelledby="repo-title">
+        <div class="section-icon" aria-hidden="true"><i data-lucide="folder-git-2"></i></div>
+        <div class="repo-copy">
+          <h2 id="repo-title">リポジトリ</h2>
+          <p id="repo-path" class="path-text">未選択</p>
+        </div>
+        <button type="button" class="icon-text-button secondary" id="choose-repo">
+          <i data-lucide="folder-open"></i>
+          <span>選択</span>
+        </button>
+      </section>
+
+      <div class="main-grid">
+        <section class="panel import-panel" aria-labelledby="import-title">
+          <div class="panel-heading">
+            <div>
+              <p class="step-label">STEP 1</p>
+              <h2 id="import-title">エクスポート</h2>
+            </div>
+            <i data-lucide="file-input" aria-hidden="true"></i>
+          </div>
+
+          <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="2つのエクスポートファイルをドロップ">
+            <i data-lucide="upload-cloud" aria-hidden="true"></i>
+            <strong>2ファイルをドロップ</strong>
+            <span>または個別に選択</span>
+          </div>
+
+          <div class="file-list">
+            <button type="button" class="file-row" id="choose-json">
+              <span class="file-kind json"><i data-lucide="braces"></i></span>
+              <span class="file-copy">
+                <strong>KeyboardHub JSON</strong>
+                <span id="json-file-name">未選択</span>
+              </span>
+              <i data-lucide="chevron-right" class="row-arrow"></i>
+            </button>
+
+            <button type="button" class="file-row" id="choose-keymap">
+              <span class="file-kind keymap"><i data-lucide="file-code-2"></i></span>
+              <span class="file-copy">
+                <strong>ZMK keymap</strong>
+                <span id="keymap-file-name">未選択</span>
+              </span>
+              <i data-lucide="chevron-right" class="row-arrow"></i>
+            </button>
+          </div>
+
+          <button type="button" class="primary-button full-width" id="analyze-button" disabled>
+            <i data-lucide="scan-search"></i>
+            <span>検証する</span>
+          </button>
+        </section>
+
+        <section class="panel analysis-panel" aria-labelledby="analysis-title">
+          <div class="panel-heading">
+            <div>
+              <p class="step-label">STEP 2</p>
+              <h2 id="analysis-title">検証結果</h2>
+            </div>
+            <i data-lucide="shield-check" aria-hidden="true"></i>
+          </div>
+
+          <div class="empty-state" id="analysis-empty">
+            <i data-lucide="scan-line" aria-hidden="true"></i>
+            <p>エクスポートを検証すると結果が表示されます</p>
+          </div>
+
+          <div class="analysis-content hidden" id="analysis-content">
+            <div class="metrics" aria-label="エクスポート概要">
+              <div class="metric"><span>レイヤー</span><strong id="metric-layers">0</strong></div>
+              <div class="metric"><span>キー</span><strong id="metric-keys">0</strong></div>
+              <div class="metric"><span>コンボ</span><strong id="metric-combos">0</strong></div>
+              <div class="metric"><span>マクロ</span><strong id="metric-macros">0</strong></div>
+            </div>
+
+            <div class="result-banner" id="result-banner" data-state="success">
+              <i data-lucide="circle-check" id="result-icon"></i>
+              <div>
+                <strong id="result-title">検証完了</strong>
+                <span id="result-message">同期できます</span>
+              </div>
+            </div>
+
+            <div class="message-list" id="message-list"></div>
+
+            <div class="protected-settings">
+              <div><i data-lucide="lock-keyhole"></i><span>AML</span></div>
+              <div><i data-lucide="lock-keyhole"></i><span>トラックボール</span></div>
+              <div><i data-lucide="lock-keyhole"></i><span>Bluetooth</span></div>
+              <div><i data-lucide="lock-keyhole"></i><span>センサー</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="sync-section" aria-labelledby="sync-title">
+        <div class="sync-copy">
+          <p class="step-label">STEP 3</p>
+          <h2 id="sync-title">GitHubへ反映</h2>
+          <p>専用ブランチを作成し、検証済みファイルだけをコミットします。</p>
+        </div>
+        <button type="button" class="primary-button sync-button" id="sync-button" disabled>
+          <i data-lucide="git-commit-horizontal"></i>
+          <span>コミットしてプッシュ</span>
+        </button>
+      </section>
+
+      <section class="result-section hidden" id="sync-result" aria-live="polite">
+        <div class="success-mark"><i data-lucide="check"></i></div>
+        <div class="success-copy">
+          <h2>プッシュ完了</h2>
+          <p id="success-detail"></p>
+        </div>
+        <div class="result-actions">
+          <button type="button" class="icon-text-button secondary" id="open-actions">
+            <i data-lucide="workflow"></i><span>Actions</span>
+          </button>
+          <button type="button" class="icon-text-button primary-small" id="open-compare">
+            <i data-lucide="git-pull-request-arrow"></i><span>変更を確認</span>
+          </button>
+        </div>
+      </section>
+
+      <details class="log-panel" id="log-panel">
+        <summary><i data-lucide="terminal-square"></i><span>処理ログ</span><span class="log-count" id="log-count">0</span></summary>
+        <div class="log-output" id="log-output" role="log" aria-live="polite"></div>
+      </details>
+    </main>
+
+    <dialog id="confirm-dialog">
+      <form method="dialog" class="dialog-content">
+        <div class="dialog-icon"><i data-lucide="git-branch-plus"></i></div>
+        <h2>GitHubへ反映しますか？</h2>
+        <p>新しい<code>dya-sync/日時</code>ブランチへコミットし、<code>origin</code>へプッシュします。</p>
+        <dl class="confirm-summary">
+          <div><dt>レイヤー</dt><dd id="confirm-layers">0</dd></div>
+          <div><dt>コンボ</dt><dd id="confirm-combos">0</dd></div>
+          <div><dt>マクロ</dt><dd id="confirm-macros">0</dd></div>
+        </dl>
+        <div class="dialog-actions">
+          <button type="submit" value="cancel" class="text-button">キャンセル</button>
+          <button type="submit" value="confirm" class="primary-button">
+            <i data-lucide="upload"></i><span>実行</span>
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="../node_modules/lucide/dist/umd/lucide.js"></script>
+    <script src="renderer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+tools/dya-sync-app/node_modules/
+tools/dya-sync-app/dist/
+tools/dya-sync-app/.pnpm-store/
+.pnpm-store/

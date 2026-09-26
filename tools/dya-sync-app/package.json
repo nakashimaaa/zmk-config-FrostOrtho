@@ -1,0 +1,47 @@
+{
+  "name": "frostortho-dya-sync",
+  "version": "0.1.0",
+  "description": "Safely sync DYA Studio exports into the FrostOrtho firmware repository.",
+  "author": "nakashimaaa",
+  "packageManager": "pnpm@11.19.0",
+  "type": "module",
+  "main": "src/main.mjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check src/main.mjs && node --check src/renderer.js && node --check src/core/validation.mjs && node --check src/core/keymap-transform.mjs && node --check src/core/git-sync.mjs",
+    "dist": "pnpm run check && pnpm test && electron-builder --win portable --publish never"
+  },
+  "dependencies": {
+    "lucide": "1.48.0"
+  },
+  "devDependencies": {
+    "electron": "44.4.5",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "works.cormoran.frostortho.dya-sync",
+    "productName": "FrostOrtho DYA Sync",
+    "asar": true,
+    "compression": "maximum",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "node_modules/lucide/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "FrostOrtho-DYA-Sync-${version}-portable.${ext}"
+    }
+  }
+}
