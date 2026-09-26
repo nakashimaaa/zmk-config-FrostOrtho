@@ -70,10 +70,9 @@ function parseGitHubRemote(remote) {
 }
 
 async function ensureRepository(repoPath, gitPath, onLog) {
-  const result = await runCommand(gitPath, ["-C", repoPath, "rev-parse", "--show-toplevel"], { onLog });
-  const actual = path.resolve(result.stdout);
-  if (actual.toLowerCase() !== path.resolve(repoPath).toLowerCase()) {
-    throw new Error(`選択したフォルダーはリポジトリ直下ではありません: ${actual}`);
+  const result = await runCommand(gitPath, ["-C", repoPath, "rev-parse", "--show-prefix"], { onLog });
+  if (result.stdout !== "") {
+    throw new Error(`選択したフォルダーはリポジトリ直下ではありません: ${repoPath}`);
   }
 
   for (const relativePath of ["config/FrostOrtho.keymap", "dya/README.md"]) {
